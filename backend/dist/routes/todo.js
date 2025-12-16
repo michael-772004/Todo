@@ -42,4 +42,7 @@ const router = express_1.default.Router();
 router.post("/create", Controller.createTodo);
 router.get("/getAllTodo", Controller.getAllTodo);
 router.get("/getTodoById/:id", Controller.getTodoById);
+router.get("/getTodoByIndex", Controller.getTodoByIndex);
+router.put("/editTodoById/:id", Controller.editTodoById);
+router.delete("/deleteTodoById/:id", Controller.deleteTodoById);
 exports.default = router;

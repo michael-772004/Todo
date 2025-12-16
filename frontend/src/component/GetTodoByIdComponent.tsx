@@ -1,5 +1,5 @@
 import React from "react";
-import type { FormData } from "./Todo";
+import type { FormData } from "./CreateTodoComponent";
 
 type Props = {
     id : string
@@ -11,7 +11,7 @@ type Props = {
     message : string
 }
 
-const GetTodoById : React.FC<Props> = ({id,handleId,handleSubmit,formData,loading,err,message})=>{
+const GetTodoByIdComponent : React.FC<Props> = ({id,handleId,handleSubmit,formData,loading,err,message})=>{
     return (
         <>
             {loading && (<p>Loading...</p>)}
@@ -34,4 +34,4 @@ const GetTodoById : React.FC<Props> = ({id,handleId,handleSubmit,formData,loadin
     )
 }
 
-export default GetTodoById;
+export default GetTodoByIdComponent;

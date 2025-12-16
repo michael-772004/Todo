@@ -56,3 +56,31 @@ export const getTodoByIndex = async(start: number,limit:number) : Promise<Docume
         throw new CustomHttpError(500,"Internal Server Error","Problem in services")
     }
 }
+
+export const editTodoById = async(id:string,data : CreateTodoRequest) : Promise<DocumentType<CreateTodoFromRepo>> =>{
+    try{
+        const result : DocumentType<CreateTodoFromRepo> | null = await repo.editTodoById(id,data);
+        return result;
+    }
+    catch(error){
+        if(error instanceof CustomHttpError){
+            throw error;
+        }
+        throw new CustomHttpError(500,"Internal Server Error","Problem in services")
+    }
+}
+
+export const deleteTodoById = async (id:string) : Promise<DocumentType<CreateTodoFromRepo>> =>{
+    try{
+        const result : DocumentType<CreateTodoFromRepo> | null = await repo.deleteTodoById(id);
+        return result;
+
+    }
+    catch(error){
+        if(error instanceof CustomHttpError){
+            throw error;
+        }
+        throw new CustomHttpError(500,"Internal Server Error","Problem in services")
+    }
+
+}

@@ -1,6 +1,6 @@
 import {Todo , TodoModel} from "../model/Todo"
 import { DocumentType } from "@typegoose/typegoose"
-import { CreateTodoResponse } from "../dao/todo"
+import { CreateTodoRequest, CreateTodoResponse } from "../dao/todo"
 import { CustomHttpError } from "../http/CustomHttpError"
 
 export const CreateTodo = async(data : Todo) : Promise<DocumentType<Todo>> =>{
@@ -32,10 +32,12 @@ export const CreateTodo = async(data : Todo) : Promise<DocumentType<Todo>> =>{
 export const getAllTodo = async(): Promise<DocumentType<Todo>[]> =>{
     try{
         const result : DocumentType<Todo>[] = await TodoModel.find();
-        if(result){
-            return result;
+        if(result.length === 0){
+            throw new CustomHttpError(404,"Resource not found","There is no data in the database");
+            
         }
-        throw new CustomHttpError(404,"Resource not found","There is no data in the database");
+        return result;
+        
     }
     catch(error){
         if(error instanceof CustomHttpError){
@@ -89,5 +91,41 @@ export const getTodoByIndex = async(start : number , limit : number): Promise<Do
             throw error
         }
         throw new CustomHttpError(500,"Internal server error","Problem in repo")
+    }
+}
+
+export const editTodoById = async (id : string, data : Todo) : Promise<DocumentType<Todo>> =>{
+    try{
+        const result : DocumentType<Todo> | null = await TodoModel.findByIdAndUpdate(id,
+            {$set : data},
+            {new : true}
+        )
+        if(result){
+            return result;
+        }
+        throw new CustomHttpError(400,"Resource not found","data is not exist in the database")
+
+    }
+    catch(error){
+        if(error instanceof CustomHttpError){
+            throw error;
+        }
+        throw new CustomHttpError(500,"Internal Server Error","problem in the repo file");
+    }
+}
+
+export const deleteTodoById = async (id: string) : Promise<DocumentType<Todo>>=>{
+    try{
+        const result : DocumentType<Todo> | null = await TodoModel.findByIdAndDelete(id)
+        if(result){
+            return result
+        }
+        throw new CustomHttpError(400,"Resource not found","data is not available to delete")
+    }
+    catch(error){
+        if(error instanceof CustomHttpError){
+            throw error;
+        }
+        throw new CustomHttpError(500,"Internal Server Error","problem in the repo file");
     }
 }

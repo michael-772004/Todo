@@ -1,6 +1,6 @@
 import React, { useState }  from "react";
-import GetTodoById from "./GetTodoById";
-import type { FormData } from "./Todo";
+import GetTodoByIdComponent from "../component/GetTodoByIdComponent";
+import type { FormData } from "../component/CreateTodoComponent";
 
 type ApiResponse = {
     success : boolean,
@@ -41,6 +41,7 @@ const GetTodoByIdContainer : React.FC = ()=>{
                 endDate : result.data.endDate
             })
         }
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         catch(error){
             seterr("error in the backend api ");
         }
@@ -49,7 +50,7 @@ const GetTodoByIdContainer : React.FC = ()=>{
         }
     }
 
-    return <GetTodoById formData={formdata} id={id} handleId={handleId} handleSubmit={handleSubmit} loading={loading} err={err} message={message} />
+    return <GetTodoByIdComponent formData={formdata} id={id} handleId={handleId} handleSubmit={handleSubmit} loading={loading} err={err} message={message} />
 }
 
 export default GetTodoByIdContainer;

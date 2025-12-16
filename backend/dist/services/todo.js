@@ -33,7 +33,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getTodoById = exports.getAllTodo = exports.createTodo = void 0;
+exports.deleteTodoById = exports.editTodoById = exports.getTodoByIndex = exports.getTodoById = exports.getAllTodo = exports.createTodo = void 0;
 const repo = __importStar(require("../repo/todo"));
 const CustomHttpError_1 = require("../http/CustomHttpError");
 const createTodo = async (data) => {
@@ -75,3 +75,42 @@ const getTodoById = async (id) => {
     }
 };
 exports.getTodoById = getTodoById;
+const getTodoByIndex = async (start, limit) => {
+    try {
+        const result = await repo.getTodoByIndex(start, limit);
+        return result;
+    }
+    catch (error) {
+        if (error instanceof CustomHttpError_1.CustomHttpError) {
+            throw error;
+        }
+        throw new CustomHttpError_1.CustomHttpError(500, "Internal Server Error", "Problem in services");
+    }
+};
+exports.getTodoByIndex = getTodoByIndex;
+const editTodoById = async (id, data) => {
+    try {
+        const result = await repo.editTodoById(id, data);
+        return result;
+    }
+    catch (error) {
+        if (error instanceof CustomHttpError_1.CustomHttpError) {
+            throw error;
+        }
+        throw new CustomHttpError_1.CustomHttpError(500, "Internal Server Error", "Problem in services");
+    }
+};
+exports.editTodoById = editTodoById;
+const deleteTodoById = async (id) => {
+    try {
+        const result = await repo.deleteTodoById(id);
+        return result;
+    }
+    catch (error) {
+        if (error instanceof CustomHttpError_1.CustomHttpError) {
+            throw error;
+        }
+        throw new CustomHttpError_1.CustomHttpError(500, "Internal Server Error", "Problem in services");
+    }
+};
+exports.deleteTodoById = deleteTodoById;

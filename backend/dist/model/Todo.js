@@ -28,7 +28,7 @@ __decorate([
 ], Todo.prototype, "status", void 0);
 __decorate([
     (0, typegoose_1.prop)(),
-    __metadata("design:type", Date)
+    __metadata("design:type", String)
 ], Todo.prototype, "lastDate", void 0);
 exports.Todo = Todo = __decorate([
     (0, typegoose_1.index)({ title: 1 }, { unique: true }),

@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import Todo from "./Todo";
-import type { FormData , ResponseFromBackend } from "./Todo";
+import React, { useEffect, useState } from "react";
+import CreateTodoComponent from "../component/CreateTodoComponent";
+import type { FormData , ResponseFromBackend } from "../component/CreateTodoComponent";
 
 
-const TodoContainer : React.FC = ()=>{
+const CreateTodoContainer : React.FC = ()=>{
     const [formData , setformData] = useState<FormData>({
         title : "",
         description : "",
@@ -14,6 +14,16 @@ const TodoContainer : React.FC = ()=>{
     const [loading,setloading] = useState<boolean>(false);
     const [err, seterr] = useState<boolean>(false);
     const [message , setmessage] = useState<string>("");
+    const [isValid, setisValid] = useState<boolean>(false);
+
+    useEffect(()=>{
+        if(formData.title !== "" && formData.description !== ""){
+            setisValid(true);
+        }
+        else{
+            setisValid(false);
+        }
+    },[formData])
 
         
     const handleChange =  (e : React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) :void =>{
@@ -42,6 +52,7 @@ const TodoContainer : React.FC = ()=>{
             setloading(false);
             setmessage(result.message);
         }
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         catch(error ){
             seterr(true);
             setmessage("error in the data sending to the backend api... ");
@@ -51,7 +62,7 @@ const TodoContainer : React.FC = ()=>{
         
     }
 
-    return <Todo formData={formData} loading={loading} err={err} message={message} handleChange={handleChange} handleSubmit={handleSubmit} />
+    return <CreateTodoComponent isValid={isValid} formData={formData} loading={loading} err={err} message={message} handleChange={handleChange} handleSubmit={handleSubmit} />
 }
 
-export default TodoContainer;
+export default CreateTodoContainer;
