@@ -2,11 +2,13 @@ import { DocumentType } from "@typegoose/typegoose";
 import * as repo from "../repo/todo";
 import { CreateTodoRequest ,CreateTodoFromRepo, CreateTodoResponse} from "../dao/todo"
 import { CustomHttpError } from "../http/CustomHttpError";
+import * as Transformer from "../transformer/todo";
 
-export const createTodo = async (data : CreateTodoRequest ) : Promise<DocumentType<CreateTodoFromRepo>>=>{
+export const createTodo = async (data : CreateTodoRequest ) : Promise<CreateTodoResponse>=>{
     try{
         const result : DocumentType<CreateTodoFromRepo> = await repo.CreateTodo(data);
-        return result;
+        const answer : CreateTodoResponse = Transformer.CreatetodoResponse(result);
+        return answer;
     }
     catch(error){
         if(error instanceof CustomHttpError){
@@ -18,10 +20,12 @@ export const createTodo = async (data : CreateTodoRequest ) : Promise<DocumentTy
 
 }
 
-export const getAllTodo = async(): Promise<DocumentType<CreateTodoFromRepo>[]> =>{
+export const getAllTodo = async(): Promise<CreateTodoResponse[]> =>{
     try{
         const result : DocumentType<CreateTodoFromRepo>[] = await repo.getAllTodo();
-        return result;
+
+        const answer : CreateTodoResponse[] = Transformer.GetAllTodoResponse(result);
+        return answer;
     }
     catch(error){
         if(error instanceof CustomHttpError){

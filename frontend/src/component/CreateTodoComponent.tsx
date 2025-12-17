@@ -1,6 +1,7 @@
     import React from "react";
 
     export type FormData = {
+        id : string,
         title : string,
         description : string,
         status : string,

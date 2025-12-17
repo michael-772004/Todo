@@ -3,6 +3,12 @@ import React, { useEffect, useState } from "react";
 import type { FormData } from "../component/CreateTodoComponent";
 import GetAllTodoComponent from "../component/GetAllTodoComponent";
 
+type apiResponse = {
+    success : boolean,
+    message : string,
+    data : FormData[]
+}
+
 const GetAllTodoContainer : React.FC = () =>{
 
     const [loading,setloading] = useState<boolean>(false);
@@ -10,11 +16,31 @@ const GetAllTodoContainer : React.FC = () =>{
     const [message , setmessage] = useState<string | null >(null);
 
     const [formDatas , setFormData] = useState<FormData[]>([{
+        id : "",
         title : "",
         description : "",
         status : "",
         endDate : ""
     }])
+
+    const handleDelete = async (id : string) : Promise<void>=>{
+        console.log("Id from frontend : ",id);
+        try{
+            const api  = await fetch(`http://localhost:8000/api/deleteTodoById/${id}`,{
+                method: "DELETE"
+            })
+
+            const result : apiResponse = await api.json();
+            console.log(result);
+            setmessage(result.message);
+        }
+        catch(error){
+            if(error instanceof Error){
+                seterr(error.message);
+            }
+            seterr("Unknown error in delete operation")
+        }
+    }
 
     useEffect( ()=>{
 
@@ -55,6 +81,6 @@ const GetAllTodoContainer : React.FC = () =>{
 
     },[] )
 
-    return <GetAllTodoComponent loading={loading} err={err} message={message} formDatas={formDatas} />
+    return <GetAllTodoComponent loading={loading} err={err} message={message} formDatas={formDatas} handleDelete={handleDelete} />
 }
 export default GetAllTodoContainer;

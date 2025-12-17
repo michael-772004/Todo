@@ -6,13 +6,13 @@ export type CreateTodoRequest = {
 }
 
 export type CreateTodoResponse = {
-    _id : string,
+    id : string,
     title : string,
     description : string,
-    status : string,
+    status : string | undefined,
     lastDate?: string,
-    createdAt : string,
-    updatedAt : string
+    createdAt?: string,
+    updatedAt?: string
 }
 
 export type CreateTodoFromRepo = Todo;

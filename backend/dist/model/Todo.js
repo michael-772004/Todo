@@ -30,6 +30,14 @@ __decorate([
     (0, typegoose_1.prop)(),
     __metadata("design:type", String)
 ], Todo.prototype, "lastDate", void 0);
+__decorate([
+    (0, typegoose_1.prop)({ default: Date.now }),
+    __metadata("design:type", Date)
+], Todo.prototype, "createdAt", void 0);
+__decorate([
+    (0, typegoose_1.prop)({ default: Date.now }),
+    __metadata("design:type", Date)
+], Todo.prototype, "updatedAt", void 0);
 exports.Todo = Todo = __decorate([
     (0, typegoose_1.index)({ title: 1 }, { unique: true }),
     (0, typegoose_1.modelOptions)({ schemaOptions: { timestamps: true } })

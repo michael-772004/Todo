@@ -1,13 +1,14 @@
 import { CustomHttpError } from "../http/CustomHttpError";
 import * as Services from "../services/todo"
 import { Request, Response } from "express"
-import type { CreateTodoFromRepo, CreateTodoRequest, Pagination } from "../dao/todo";
+import type { CreateTodoFromRepo, CreateTodoRequest, CreateTodoResponse, Pagination } from "../dao/todo";
 import { DocumentType } from "@typegoose/typegoose";
 
 export const createTodo = async(req:Request,res:Response): Promise<void>=>{
     const data = req.body;
     try{
-        const result = await Services.createTodo(data);
+        const result : CreateTodoResponse = await Services.createTodo(data);
+        console.log("result : ",result);
         res.status(201).json({success : true,message : "Successfully created",data : result})
     }
     catch(error){

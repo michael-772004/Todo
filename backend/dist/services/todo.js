@@ -36,10 +36,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteTodoById = exports.editTodoById = exports.getTodoByIndex = exports.getTodoById = exports.getAllTodo = exports.createTodo = void 0;
 const repo = __importStar(require("../repo/todo"));
 const CustomHttpError_1 = require("../http/CustomHttpError");
+const Transformer = __importStar(require("../transformer/todo"));
 const createTodo = async (data) => {
     try {
         const result = await repo.CreateTodo(data);
-        return result;
+        const answer = Transformer.todoResponse(result);
+        return answer;
     }
     catch (error) {
         if (error instanceof CustomHttpError_1.CustomHttpError) {
